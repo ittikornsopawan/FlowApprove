@@ -1,25 +1,5 @@
 CREATE DATABASE IF NOT EXISTS postgres;
 
-CREATE TABLE IF NOT EXISTS m_workflow_type
-(
-    id UUID NOT NULL DEFAULT GEN_RANDOM_UUID() PRIMARY KEY,
-    created_by VARCHAR(64) NOT NULL,
-    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by VARCHAR(64),
-    updated_at TIMESTAMP WITHOUT TIME ZONE,
-
-    is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    inactive_at TIMESTAMP WITHOUT TIME ZONE,
-    inactive_by VARCHAR(64),
-
-    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
-    deleted_at TIMESTAMP WITHOUT TIME ZONE,
-    deleted_by VARCHAR(64),
-
-    name VARCHAR(128) NOT NULL,
-    description TEXT
-);
-
 CREATE TABLE IF NOT EXISTS t_workflow
 (
     id UUID NOT NULL DEFAULT GEN_RANDOM_UUID() PRIMARY KEY,
@@ -36,7 +16,7 @@ CREATE TABLE IF NOT EXISTS t_workflow
     deleted_at TIMESTAMP WITHOUT TIME ZONE,
     deleted_by VARCHAR(64),
 
-    type_id UUID NOT NULL REFERENCES m_workflow_type(id),
+    type VARCHAR(16) NOT NULL CHECK (type IN ('APPROVAL', 'NOTIFICATION', 'TASK', 'HYBRID')),
     name VARCHAR(128) NOT NULL,
     description TEXT
 );
@@ -63,8 +43,8 @@ CREATE TABLE IF NOT EXISTS t_workflow_node
     name VARCHAR(128) NOT NULL,
     description TEXT,
 
-    approver_source VARCHAR(32),
-    approval_policy VARCHAR(32)
+    approver_source NOT NULL VARCHAR(32) CHECK (approver_source IN ('STATIC', 'DYNAMIC', 'EXTERNAL')),
+    approval_policy VARCHAR(32) CHECK (approval_policy IN ('ALL', 'ANY'))
 );
 
 CREATE TABLE IF NOT EXISTS t_workflow_node_assignment
@@ -177,6 +157,7 @@ CREATE TABLE IF NOT EXISTS m_request_property
     key VARCHAR(128) NOT NULL,
     title VARCHAR(256) NOT NULL,
     type VARCHAR(64) NOT NULL,
+    description TEXT,
     is_required BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -225,7 +206,7 @@ CREATE TABLE IF NOT EXISTS t_request_workflow_instance_node
     completed_at TIMESTAMP WITHOUT TIME ZONE
 );
 
-CREATE TABLE IF NOT EXISTS t_request_workflow_instance_node_approval
+CREATE TABLE IF NOT EXISTS t_request_workflow_instance_node_assignment
 (
     id UUID NOT NULL DEFAULT GEN_RANDOM_UUID() PRIMARY KEY,
     created_by VARCHAR(64) NOT NULL,
@@ -242,7 +223,9 @@ CREATE TABLE IF NOT EXISTS t_request_workflow_instance_node_approval
     deleted_by VARCHAR(64),
 
     instance_node_id UUID NOT NULL REFERENCES t_request_workflow_instance_node(id),
-    approver VARCHAR(256) NOT NULL,
+    assignee_type VARCHAR(32) NOT NULL,
+    assignee_name VARCHAR(256) NOT NULL,
+    assignee_contact VARCHAR(32) NOT NULL,
     decision VARCHAR(32) CHECK (decision IN ('PENDDING', 'APPROVED', 'REJECTED', 'REVISED', 'TASK_DONE', 'TASK_RETRY', 'CANCELLED')),
     decision_at TIMESTAMP WITHOUT TIME ZONE,
     comments TEXT

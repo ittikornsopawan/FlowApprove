@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common/" />
     <Folder Include="Entity/" />
     <Folder Include="Persistence/" />
     <Folder Include="Repository/" />

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FlowApprove.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a5714f858d42c82a1411611444e8925478261ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01dfddc69881dd66f6744393289c469647c2650b")]
 [assembly: System.Reflection.AssemblyProductAttribute("FlowApprove.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FlowApprove.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
