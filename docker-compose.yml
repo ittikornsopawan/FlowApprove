@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:18
+    container_name: flowapprove-db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+  redis:
+    container_name: flowapprove-redis
+    image: redis:7
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  api:
+    container_name: flowapprove-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__Default=Host=db;Port=5432;Database=postgres;Username=postgres;Password=postgres
+      - Redis__Host=redis
+      - Redis__Port=6379
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

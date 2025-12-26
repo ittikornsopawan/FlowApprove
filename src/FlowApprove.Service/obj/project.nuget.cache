@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "EH3Bdi137Tc=",
+  "success": true,
+  "projectFilePath": "/Users/socket9companylimited/repository/FlowApprove/src/FlowApprove.Service/FlowApprove.Service.csproj",
+  "expectedPackageFiles": [
+    "/Users/socket9companylimited/.nuget/packages/microsoft.entityframeworkcore.abstractions/10.0.1/microsoft.entityframeworkcore.abstractions.10.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

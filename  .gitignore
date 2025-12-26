@@ -1,0 +1,56 @@
+# =========================
+# .NET / Visual Studio
+# =========================
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# =========================
+# Build / Publish
+# =========================
+out/
+publish/
+*.dll
+*.exe
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+secrets.json
+appsettings.*.json
+!appsettings.json
+
+# =========================
+# Docker
+# =========================
+**/docker-data/
+**/postgres-data/
+**/redis-data/
+
+# =========================
+# Database
+# =========================
+*.db
+*.sqlite
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
