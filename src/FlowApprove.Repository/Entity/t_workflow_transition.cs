@@ -9,14 +9,14 @@ public class t_workflow_transition : AuditableEntity
     public required Guid FromNodeId { get; set; }
     public required Guid ToNodeId { get; set; }
     public string? Condition { get; set; }
-    public required string name { get; set; }
+    public required string Name { get; set; }
     public string? Description { get; set; }
 
     public t_workflow_transition(
         Guid WorkflowId,
         Guid FromNodeId,
         Guid ToNodeId,
-        string name,
+        string Name,
         string? Condition = null,
         string? Description = null,
         Guid? Id = null,
@@ -41,16 +41,16 @@ public class t_workflow_transition : AuditableEntity
         if (ToNodeId == Guid.Empty)
             throw new ArgumentException("ToNodeId cannot be empty.", nameof(ToNodeId));
 
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+        if (string.IsNullOrWhiteSpace(Name))
+            throw new ArgumentException("Name cannot be null or empty.", nameof(Name));
 
-        if (name.Length > 128)
-            throw new ArgumentException("Name cannot exceed 128 characters.", nameof(name));
+        if (Name.Length > 128)
+            throw new ArgumentException("Name cannot exceed 128 characters.", nameof(Name));
 
         this.WorkflowId = WorkflowId;
         this.FromNodeId = FromNodeId;
         this.ToNodeId = ToNodeId;
-        this.name = name;
+        this.Name = Name;
         this.Condition = Condition;
         this.Description = Description;
         this.Id = Id ?? Guid.NewGuid();
